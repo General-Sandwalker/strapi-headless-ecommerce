@@ -39,3 +39,5 @@ Thumbs.db
 !.vscode/extensions.json
 
 # ---- Strapi note: .env files with real APP_KEYS must NOT be committed ----
+
+.kilo
