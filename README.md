@@ -122,6 +122,17 @@ Inside the Docker network the frontend reaches Strapi at
 Uploaded files and the SQLite database persist through the
 `public/uploads` and `.tmp` bind mounts.
 
+> The containers start with an empty SQLite database, so create the admin
+> account and seed the demo content once (locally the same two commands work
+> against `npm run develop`):
+>
+> ```bash
+> docker exec -it strapi_backend npx strapi admin:create-user \
+>   --email=admin@accessories-store.dev --password=Admin1234! \
+>   --firstname=Store --lastname=Admin
+> docker exec -it strapi_backend bash scripts/seed-demo-content.sh
+> ```
+
 ## Screenshots (proof the showcase works)
 
 | Screenshot | |

@@ -14,13 +14,23 @@
 #   bash scripts/seed-demo-content.sh
 #
 # NOTE: the admin account must already exist (see README.md).
+# In Docker:  docker exec -it strapi_backend bash scripts/seed-demo-content.sh
 ###############################################################################
 set -euo pipefail
 
 API="${STRAPI_URL:-http://127.0.0.1:1337}"
 EMAIL="${STRAPI_ADMIN_EMAIL:-admin@accessories-store.dev}"
 PASSWORD="${STRAPI_ADMIN_PASSWORD:-Admin1234!}"
-IMG_DIR="$(cd "$(dirname "$0")/../../docs/images" && pwd)"   # repo/docs/images
+IMG_DIR=""
+for candidate in "${SEED_IMAGES_DIR:-}" "$(dirname "$0")/../../docs/images" "$(dirname "$0")/../docs/images"; do
+  if [ -z "$candidate" ]; then continue; fi
+  if [ -d "$candidate" ]; then IMG_DIR="$(cd "$candidate" && pwd)"; break; fi
+done
+if [ -z "$IMG_DIR" ]; then
+  echo "ERROR: could not locate the seed images (looked for docs/images relative to the script)." >&2
+  exit 1
+fi
+echo "Using images from $IMG_DIR"
 
 echo "==> Logging in as $EMAIL"
 TOKEN=$(curl -sS -X POST "$API/admin/login" -H "Content-Type: application/json" \
