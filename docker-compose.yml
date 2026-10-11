@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend-accessoires
+    container_name: strapi_backend
+    ports:
+      - "1337:1337"
+    environment:
+      # --- APP secrets (local dev only) ---
+      # NOTE: these are generated local development values. In production they
+      # would come from a secret manager, never from a committed file.
+      - APP_KEYS=c8/8OZBtyT6P7Wra8WlZ7Q==,Kdi7V16j79ayclK/mCUumw==,4s4ia297+gT33/P+f0cOVA==,G9BGHaP+tQn49dCRA6xGaw==
+      - API_TOKEN_SALT=9fayxGN62SIq/32/lyqWBg==
+      - ADMIN_JWT_SECRET=QX/bAmYsPsY4vaMfuiK4RA==
+      - TRANSFER_TOKEN_SALT=EZdRx6DelTmOegH/O2N0yw==
+      - JWT_SECRET=RL3qHhlFfVV4NmRHR/vS8Q==
+      # --- Database (as specified in the assignment) ---
+      - DATABASE_CLIENT=sqlite
+      - DATABASE_FILENAME=.tmp/data.db
+      - NODE_ENV=development
+    volumes:
+      - ./backend-accessoires/public/uploads:/opt/app/public/uploads
+      - ./backend-accessoires/.tmp:/opt/app/.tmp
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:1337/_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  frontend:
+    build: ./frontend-vitrine
+    container_name: nextjs_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:1337
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

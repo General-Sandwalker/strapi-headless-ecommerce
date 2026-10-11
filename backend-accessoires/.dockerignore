@@ -1,0 +1,15 @@
+node_modules
+.npm
+.git
+.gitignore
+.env
+.env.*
+Dockerfile
+.dockerignore
+.cache
+.tmp
+build
+dist
+.next
+coverage
+*.log
