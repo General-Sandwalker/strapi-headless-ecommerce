@@ -101,7 +101,17 @@ npm run dev         # http://localhost:3000
 ```
 
 `src/app/page.tsx` is a server component that fetches the Strapi API at request
-time (`cache: 'no-store'`) and renders the product grid with Tailwind CSS.
+time (`cache: 'no-store'`) and renders the storefront UI. The UI lives in
+`src/components/` and adds a real storefront experience on top of the Strapi
+data — all of it still driven by the same REST API:
+
+* sticky header with search and cart badge
+* hero banner, trust badges (shipping / warranty / returns / payment)
+* category filter chips, price/name sorting, live product count
+* product cards with badges ("New" / "Best seller"), star ratings,
+  hover zoom, quick-add to cart
+* working cart drawer (quantities, remove, subtotal, free-shipping rule)
+* newsletter capture, toast notifications and a full footer
 
 ## Part 3 — Run with Docker
 
@@ -139,6 +149,7 @@ Uploaded files and the SQLite database persist through the
 |---|---|
 | Desktop storefront | [`docs/screenshots/storefront-desktop.png`](docs/screenshots/storefront-desktop.png) |
 | Mobile storefront (responsive grid) | [`docs/screenshots/storefront-mobile.png`](docs/screenshots/storefront-mobile.png) |
+| Cart drawer (add to cart, quantities, live total) | [`docs/screenshots/cart-drawer.png`](docs/screenshots/cart-drawer.png) |
 | Strapi REST API response | [`docs/screenshots/strapi-api-response.png`](docs/screenshots/strapi-api-response.png) |
 
 ## Deliverables checklist
