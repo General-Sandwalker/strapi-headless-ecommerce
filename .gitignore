@@ -1,0 +1,41 @@
+# ---- Node / dependencies ----
+node_modules/
+.pnp
+.pnp.js
+
+# ---- Environment / secrets ----
+.env
+.env.*
+!.env.example
+
+# ---- Strapi (v4 build artifacts & local data) ----
+**/.cache/
+**/.tmp/
+**/build/
+**/dist/
+**/exports/
+**/uploads/**/*.tmp
+
+# ---- Next.js ----
+.next/
+out/
+next-env.d.ts
+
+# ---- Tests / coverage ----
+coverage/
+.nyc_output/
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# ---- Strapi note: .env files with real APP_KEYS must NOT be committed ----
